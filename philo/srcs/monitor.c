@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:42:26 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 17:09:55 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/21 20:23:47 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	*monitor_philosopher(t_simulation *simulation, int i,
 	if (current_time
 		- simulation->philosophers[i].last_meal_time > simulation->time_die)
 	{
-		log_action(&simulation->philosophers[i], "died");
-		simulation->simul_over = 1;
+		log_action(&simulation->philosophers[i], "died", REDB);
+		set_simul_over(simulation, 1);
 	}
 	pthread_mutex_unlock(&simulation->philosophers[i].meal_time_mutex);
 	if (simulation->num_must_eat > 0)
@@ -43,7 +43,7 @@ void	*monitor_simulation(void *arg)
 	int				all_satisfied;
 
 	simulation = (t_simulation *)arg;
-	while (!simulation->simul_over)
+	while (!is_simul_over(simulation))
 	{
 		all_satisfied = 1;
 		i = 0;
@@ -53,7 +53,7 @@ void	*monitor_simulation(void *arg)
 			i++;
 		}
 		if (simulation->num_must_eat > 0 && all_satisfied)
-			simulation->simul_over = 1;
+			set_simul_over(simulation, 1);
 		usleep(500);
 	}
 	return (NULL);

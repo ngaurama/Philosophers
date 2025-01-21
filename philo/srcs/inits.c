@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:39:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 17:12:40 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/21 20:23:27 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int	init_input(char **argv, int argc, t_simulation *simulation)
 		return (0);
 	}
 	pthread_mutex_init(&simulation->print_mutex, NULL);
+    pthread_mutex_init(&simulation->simul_over_mutex, NULL);
 	return (1);
 }
