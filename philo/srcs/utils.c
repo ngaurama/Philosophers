@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:40:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 18:25:29 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:55:48 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,18 @@ void	precise_sleep(long duration_ms)
 void	log_action(t_philo *philo, const char *action, char *color)
 {
 	pthread_mutex_lock(&philo->simulation->print_mutex);
-	if (!philo->simulation->simul_over)
-		printf("%s%ld %d %s%s\n", color, get_time()
-			- philo->simulation->start_time, philo->id, action, reset);
+	if (!is_simulation_over(philo))
+		ft_printf("%s%d %d %s%s\n", color, get_time()
+			- philo->simulation->start_time, philo->id, action, RESET);
 	pthread_mutex_unlock(&philo->simulation->print_mutex);
 }
 
-void	think(t_philo *philo)
+int	is_simulation_over(t_philo *philo)
 {
-	log_action(philo, "is thinking", WHT);
+	int	over;
+
+	pthread_mutex_lock(&philo->simulation->simul_over_mutex);
+	over = philo->simulation->simul_over;
+	pthread_mutex_unlock(&philo->simulation->simul_over_mutex);
+	return (over);
 }

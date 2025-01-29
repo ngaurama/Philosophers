@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:42:26 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 20:23:47 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/28 23:47:41 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@ void	*monitor_philosopher(t_simulation *simulation, int i,
 		int *all_satisfied)
 {
 	long	current_time;
+	long	last_meal;
 
 	pthread_mutex_lock(&simulation->philosophers[i].meal_time_mutex);
 	current_time = get_time();
-	if (current_time
-		- simulation->philosophers[i].last_meal_time > simulation->time_die)
+	last_meal = simulation->philosophers[i].last_meal_time;
+	pthread_mutex_unlock(&simulation->philosophers[i].meal_time_mutex);
+	if (current_time - last_meal > simulation->time_die)
 	{
 		log_action(&simulation->philosophers[i], "died", REDB);
-		set_simul_over(simulation, 1);
+		pthread_mutex_lock(&simulation->simul_over_mutex);
+		simulation->simul_over = 1;
+		pthread_mutex_unlock(&simulation->simul_over_mutex);
 	}
-	pthread_mutex_unlock(&simulation->philosophers[i].meal_time_mutex);
 	if (simulation->num_must_eat > 0)
 	{
 		pthread_mutex_lock(&simulation->philosophers[i].times_eaten_mutex);
@@ -43,7 +46,7 @@ void	*monitor_simulation(void *arg)
 	int				all_satisfied;
 
 	simulation = (t_simulation *)arg;
-	while (!is_simul_over(simulation))
+	while (!simulation->simul_over)
 	{
 		all_satisfied = 1;
 		i = 0;
@@ -53,7 +56,11 @@ void	*monitor_simulation(void *arg)
 			i++;
 		}
 		if (simulation->num_must_eat > 0 && all_satisfied)
-			set_simul_over(simulation, 1);
+		{
+			pthread_mutex_lock(&simulation->simul_over_mutex);
+			simulation->simul_over = 2;
+			pthread_mutex_unlock(&simulation->simul_over_mutex);
+		}
 		usleep(500);
 	}
 	return (NULL);

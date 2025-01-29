@@ -6,11 +6,29 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:41:39 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 20:23:41 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/28 23:59:11 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+// void	pick_up_forks_debug(t_philo *philo)
+// {
+// 	if (philo->id % 2 == 0)
+// 	{
+// 		pthread_mutex_lock(&philo->right_fork->mutex);
+// 		log_action(philo, "has taken right fork", CYN);
+// 		pthread_mutex_lock(&philo->left_fork->mutex);
+// 		log_action(philo, "has taken left fork", CYN);
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_lock(&philo->left_fork->mutex);
+// 		log_action(philo, "has taken left fork", CYN);
+// 		pthread_mutex_lock(&philo->right_fork->mutex);
+// 		log_action(philo, "has taken right fork", CYN);
+// 	}
+// }
 
 void	pick_up_forks(t_philo *philo)
 {
@@ -28,24 +46,6 @@ void	pick_up_forks(t_philo *philo)
 		pthread_mutex_lock(&philo->right_fork->mutex);
 		log_action(philo, "has taken a fork", CYN);
 	}
-}
-
-void pick_up_forks_debug(t_philo *philo)
-{
-    if (philo->id % 2 == 0)
-    {
-        pthread_mutex_lock(&philo->right_fork->mutex);
-        log_action(philo, "has taken right fork", CYN);
-        pthread_mutex_lock(&philo->left_fork->mutex);
-        log_action(philo, "has taken left fork", CYN);
-    }
-    else
-    {
-        pthread_mutex_lock(&philo->left_fork->mutex);
-        log_action(philo, "has taken left fork", CYN);
-        pthread_mutex_lock(&philo->right_fork->mutex);
-        log_action(philo, "has taken right fork", CYN);
-    }
 }
 
 void	eat(t_philo *philo)
@@ -72,73 +72,29 @@ void	sleep_philo(t_philo *philo)
 	precise_sleep(philo->simulation->time_sleep);
 }
 
-int is_simul_over(t_simulation *simulation)
+void	*philosopher_routine(void *arg)
 {
-    int result;
+	t_philo	*philo;
 
-    pthread_mutex_lock(&simulation->simul_over_mutex);
-    result = simulation->simul_over;
-    pthread_mutex_unlock(&simulation->simul_over_mutex);
-
-    return result;
+	philo = (t_philo *)arg;
+	while (1)
+	{
+		if (is_simulation_over(philo))
+			break ;
+		log_action(philo, "is thinking", WHT);
+		if (is_simulation_over(philo))
+			break ;
+		pick_up_forks(philo);
+		if (is_simulation_over(philo))
+		{
+			put_down_forks(philo);
+			break ;
+		}
+		eat(philo);
+		put_down_forks(philo);
+		if (is_simulation_over(philo))
+			break ;
+		sleep_philo(philo);
+	}
+	return (NULL);
 }
-
-void set_simul_over(t_simulation *simulation, int value)
-{
-    pthread_mutex_lock(&simulation->simul_over_mutex);
-    simulation->simul_over = value;
-    pthread_mutex_unlock(&simulation->simul_over_mutex);
-}
-
-void *philosopher_routine(void *arg)
-{
-    t_philo *philo;
-
-    philo = (t_philo *)arg;
-    while (!is_simul_over(philo->simulation))
-    {
-        think(philo);
-        if (is_simul_over(philo->simulation))
-            break;
-        if (DEBUG)
-            pick_up_forks_debug(philo);
-        else
-            pick_up_forks(philo);
-        if (is_simul_over(philo->simulation))
-        {
-            put_down_forks(philo);
-            break;
-        }
-        eat(philo);
-        put_down_forks(philo);
-        if (is_simul_over(philo->simulation))
-            break;
-        sleep_philo(philo);
-    }
-    return (NULL);
-}
-
-// void	*philosopher_routine(void *arg)
-// {
-// 	t_philo	*philo;
-
-// 	philo = (t_philo *)arg;
-// 	while (!philo->simulation->simul_over)
-// 	{
-// 		think(philo);
-// 		if (philo->simulation->simul_over)
-// 			break ;
-// 		pick_up_forks(philo);
-// 		if (philo->simulation->simul_over)
-// 		{
-// 			put_down_forks(philo);
-// 			break ;
-// 		}
-// 		eat(philo);
-// 		put_down_forks(philo);
-// 		if (philo->simulation->simul_over)
-// 			break ;
-// 		sleep_philo(philo);
-// 	}
-// 	return (NULL);
-// }

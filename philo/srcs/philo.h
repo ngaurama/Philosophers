@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:06:07 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 20:23:32 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 01:01:20 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,11 @@
 
 # include "ansi_colors.h"
 # include "libft/ft_printf.h"
-# include "libft/get_next_line.h"
 # include "libft/libft.h"
 # include <pthread.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# ifndef DEBUG
-#  define DEBUG 1
-# endif
 
 typedef struct s_fork
 {
@@ -61,15 +55,23 @@ typedef struct s_philo
 	pthread_t		thread;
 }					t_philo;
 
+// Design
+void				print_intro(void);
+void				print_summary(t_simulation *simulation, int i);
+void				print_simulation_details(t_simulation *simulation);
+
 // inits
+int					init_forks(t_simulation *simul);
+int					init_philosophers(t_simulation *simul);
 int					init_philo(t_simulation *simul);
+int					check_specifics(int argc, t_simulation *simulation);
 int					init_input(char **argv, int argc, t_simulation *simulation);
 
 // utils
 long				get_time(void);
 void				precise_sleep(long duration_ms);
 void				log_action(t_philo *philo, const char *action, char *color);
-void				think(t_philo *philo);
+int					is_simulation_over(t_philo *philo);
 
 // simulation
 void				pick_up_forks(t_philo *philo);
@@ -77,12 +79,15 @@ void				eat(t_philo *philo);
 void				put_down_forks(t_philo *philo);
 void				sleep_philo(t_philo *philo);
 void				*philosopher_routine(void *arg);
-void				set_simul_over(t_simulation *simulation, int value);
-int					is_simul_over(t_simulation *simulation);
 
 // monitor
-void				for_each_philo(t_simulation *simulation, int i,
-						int all_satisfied);
+void				*monitor_philosopher(t_simulation *simulation, int i,
+						int *all_satisfied);
 void				*monitor_simulation(void *arg);
+
+// Start and clean
+void				start_threads(t_simulation *simulation);
+void				cleanup_simulation(t_simulation *simulation);
+int					single_philo(t_simulation *simulation);
 
 #endif

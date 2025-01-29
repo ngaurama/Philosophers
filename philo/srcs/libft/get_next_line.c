@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 16:58:15 by ngaurama          #+#    #+#             */
-/*   Updated: 2024/11/25 14:55:27 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:52:27 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*get_next_line(int fd)
 // 	fd = open ("giant_line.txt", O_RDONLY);
 // 	while ((line = get_next_line(fd)) != NULL)
 // 	{
-// 		printf("%s", line);
+// 		ft_printf("%s", line);
 // 		free(line);
 // 	}
 // 	close(fd);

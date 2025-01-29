@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 18:11:55 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 18:12:31 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:00:31 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@
 # define BHCYN "\e[1;96m"
 # define BHWHT "\e[1;97m"
 
-// Reset
-# define reset "\e[0m"
+// RESET
+# define RESET "\e[0m"
 # define CRESET "\e[0m"
 # define COLOR_RESET "\e[0m"
 

@@ -6,12 +6,12 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 13:37:52 by ngaurama          #+#    #+#             */
-/*   Updated: 2024/12/03 13:36:59 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:54:13 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef ft_printf_H
+# define ft_printf_H
 
 // All includes
 # include "libft.h"
@@ -39,7 +39,7 @@ int		handler(char const *format, va_list args);
 int		ft_handle_flags(char const *format, int shift, t_flags *flags);
 int		ft_result(char letter, va_list args, t_flags flags);
 
-// Printf letter's main functions
+// ft_printf letter's main functions
 int		ft_printf_c(char c, t_flags flags);
 int		ft_printf_s(char const *str, t_flags flags);
 int		ft_printf_p(unsigned long n, t_flags flags);

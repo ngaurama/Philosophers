@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:39:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/21 20:23:27 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:57:17 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,40 @@ int	init_philo(t_simulation *simul)
 	return (1);
 }
 
-int	init_input(char **argv, int argc, t_simulation *simulation)
+int	check_specifics(int argc, t_simulation *simulation)
 {
-	if (argc < 5 || argc > 6)
-	{
-		printf("Usage: ./philo num_phi time_die");
-		printf("time_eat time_sleep [num_must_eat]\n");
-		return (0);
-	}
-	simulation->num_phi = atoi(argv[1]);
-	simulation->time_die = atoi(argv[2]);
-	simulation->time_eat = atoi(argv[3]);
-	simulation->time_sleep = atoi(argv[4]);
-	if (argc == 6)
-		simulation->num_must_eat = atoi(argv[5]);
-	else
-		simulation->num_must_eat = -1;
-	simulation->simul_over = 0;
 	if (simulation->num_phi <= 0 || simulation->time_die <= 0
 		|| simulation->time_eat <= 0 || simulation->time_sleep <= 0
 		|| (argc == 6 && simulation->num_must_eat <= 0))
 	{
-		printf("Error: Invalid arguments\n");
+		ft_printf("Error: Invalid arguments\n");
 		return (0);
 	}
+	return (1);
+}
+
+int	init_input(char **argv, int argc, t_simulation *simulation)
+{
+	if (argc < 5 || argc > 6)
+	{
+		ft_printf("%sUsage: ./philo num_phi time_die", BRED);
+		ft_printf("time_eat time_sleep [num_must_eat]%s\n\n", RESET);
+		return (0);
+	}
+	simulation->num_phi = ft_atoi(argv[1]);
+	simulation->time_die = ft_atoi(argv[2]);
+	simulation->time_eat = ft_atoi(argv[3]);
+	simulation->time_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		simulation->num_must_eat = ft_atoi(argv[5]);
+	else
+		simulation->num_must_eat = -1;
+	simulation->simul_over = 0;
+	if (!check_specifics(argc, simulation))
+		return (0);
+	if (simulation->num_phi == 1)
+		return (2);
 	pthread_mutex_init(&simulation->print_mutex, NULL);
-    pthread_mutex_init(&simulation->simul_over_mutex, NULL);
+	pthread_mutex_init(&simulation->simul_over_mutex, NULL);
 	return (1);
 }
