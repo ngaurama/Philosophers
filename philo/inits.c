@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:39:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/29 00:57:17 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:58:46 by nachogooda       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	check_specifics(int argc, t_simulation *simulation)
 		|| simulation->time_eat <= 0 || simulation->time_sleep <= 0
 		|| (argc == 6 && simulation->num_must_eat <= 0))
 	{
-		ft_printf("Error: Invalid arguments\n");
+		printf("Error: Invalid arguments\n");
 		return (0);
 	}
 	return (1);
@@ -74,8 +74,8 @@ int	init_input(char **argv, int argc, t_simulation *simulation)
 {
 	if (argc < 5 || argc > 6)
 	{
-		ft_printf("%sUsage: ./philo num_phi time_die", BRED);
-		ft_printf("time_eat time_sleep [num_must_eat]%s\n\n", RESET);
+		printf("%sUsage: ./philo num_phi time_die", BRED);
+		printf("time_eat time_sleep [num_must_eat]\n%s", RESET);
 		return (0);
 	}
 	simulation->num_phi = ft_atoi(argv[1]);

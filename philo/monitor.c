@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:42:26 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/28 23:47:41 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:59:25 by nachogooda       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*monitor_simulation(void *arg)
 			simulation->simul_over = 2;
 			pthread_mutex_unlock(&simulation->simul_over_mutex);
 		}
-		usleep(500);
+		usleep(100);
 	}
 	return (NULL);
 }

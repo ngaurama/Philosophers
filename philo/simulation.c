@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:41:39 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/28 23:59:11 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/02/01 15:02:26 by nachogooda       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,22 @@ void	sleep_philo(t_philo *philo)
 	log_action(philo, "is sleeping", MAG);
 	precise_sleep(philo->simulation->time_sleep);
 }
+
+// void de_sync(t_philo *philo)
+// {
+// 	if (philo->simulation->num_phi % 2 == 0)
+// 	{
+// 		if (philo->id % 2 == 0)
+// 			precise_sleep(3);
+// 	}
+// 	else
+// 	{
+// 		if (philo->id % 2)
+// 			thinking(philo, 1);
+// 	}
+//	put this in routine if you need: de_sync(philo); before loop
+//	and: thinking(philo, 0); in loop after first if
+// }
 
 void	*philosopher_routine(void *arg)
 {

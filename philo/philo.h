@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:06:07 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/01/29 01:01:20 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:59:54 by nachogooda       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define PHILO_H
 
 # include "ansi_colors.h"
-# include "libft/ft_printf.h"
-# include "libft/libft.h"
 # include <pthread.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -67,12 +66,11 @@ int					init_philo(t_simulation *simul);
 int					check_specifics(int argc, t_simulation *simulation);
 int					init_input(char **argv, int argc, t_simulation *simulation);
 
-// utils
+// Philo utils
 long				get_time(void);
 void				precise_sleep(long duration_ms);
 void				log_action(t_philo *philo, const char *action, char *color);
 int					is_simulation_over(t_philo *philo);
-
 // simulation
 void				pick_up_forks(t_philo *philo);
 void				eat(t_philo *philo);
@@ -89,5 +87,8 @@ void				*monitor_simulation(void *arg);
 void				start_threads(t_simulation *simulation);
 void				cleanup_simulation(t_simulation *simulation);
 int					single_philo(t_simulation *simulation);
+
+// Utils
+int					ft_atoi(const char *str);
 
 #endif
