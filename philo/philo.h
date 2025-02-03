@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 20:06:07 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 14:59:54 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 14:39:12 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int					init_input(char **argv, int argc, t_simulation *simulation);
 
 // Philo utils
 long				get_time(void);
-void				precise_sleep(long duration_ms);
+void				precise_sleep(long duration_ms, t_philo *philo);
 void				log_action(t_philo *philo, const char *action, char *color);
 int					is_simulation_over(t_philo *philo);
 // simulation
@@ -84,7 +84,7 @@ void				*monitor_philosopher(t_simulation *simulation, int i,
 void				*monitor_simulation(void *arg);
 
 // Start and clean
-void				start_threads(t_simulation *simulation);
+int					start_threads(t_simulation *simulation);
 void				cleanup_simulation(t_simulation *simulation);
 int					single_philo(t_simulation *simulation);
 

@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:41:39 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 15:02:26 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 15:40:49 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	eat(t_philo *philo)
 	philo->last_meal_time = get_time();
 	pthread_mutex_unlock(&philo->meal_time_mutex);
 	log_action(philo, "is eating", GRNB);
-	precise_sleep(philo->simulation->time_eat);
+	precise_sleep(philo->simulation->time_eat, philo);
 	pthread_mutex_lock(&philo->times_eaten_mutex);
 	philo->times_eaten++;
 	pthread_mutex_unlock(&philo->times_eaten_mutex);
@@ -69,7 +69,7 @@ void	put_down_forks(t_philo *philo)
 void	sleep_philo(t_philo *philo)
 {
 	log_action(philo, "is sleeping", MAG);
-	precise_sleep(philo->simulation->time_sleep);
+	precise_sleep(philo->simulation->time_sleep, philo);
 }
 
 // void de_sync(t_philo *philo)

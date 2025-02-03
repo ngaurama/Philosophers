@@ -6,13 +6,13 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 00:01:28 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 15:02:45 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 14:39:45 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	start_threads(t_simulation *simulation)
+int	start_threads(t_simulation *simulation)
 {
 	int			i;
 	pthread_t	monitor_thread;
@@ -24,19 +24,20 @@ void	start_threads(t_simulation *simulation)
 				philosopher_routine, &simulation->philosophers[i]))
 		{
 			printf("Error: Failed to create philosopher thread\n");
-			exit(1);
+			return (1);
 		}
 		i++;
 	}
 	if (pthread_create(&monitor_thread, NULL, monitor_simulation, simulation))
 	{
 		printf("Error: Failed to create monitor thread\n");
-		exit(1);
+		return (1);
 	}
 	i = -1;
 	while (++i < simulation->num_phi)
 		pthread_join(simulation->philosophers[i].thread, NULL);
 	pthread_join(monitor_thread, NULL);
+	return (0);
 }
 
 void	cleanup_simulation(t_simulation *simulation)
@@ -60,7 +61,6 @@ void	cleanup_simulation(t_simulation *simulation)
 int	single_philo(t_simulation *simulation)
 {
 	print_simulation_details(simulation);
-	sleep(2);
 	printf("0 1 is thinking\n");
 	printf(CYN "0 1 has taken the only fork\n" RESET);
 	usleep(simulation->time_die * 100);

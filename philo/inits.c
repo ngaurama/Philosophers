@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:39:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 14:58:46 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 13:32:52 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int	check_specifics(int argc, t_simulation *simulation)
 		|| (argc == 6 && simulation->num_must_eat <= 0))
 	{
 		printf("Error: Invalid arguments\n");
+		printf("%sUsage: ./philo number_of_philo ", BRED);
+		printf("time_to_die time_to_eat time_to_sleep ");
+		printf("[number_of_times_each_philo_must_eat]\n%s", RESET);
 		return (0);
 	}
 	return (1);
@@ -74,8 +77,10 @@ int	init_input(char **argv, int argc, t_simulation *simulation)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf("%sUsage: ./philo num_phi time_die", BRED);
-		printf("time_eat time_sleep [num_must_eat]\n%s", RESET);
+		printf("Error: Invalid arguments\n");
+		printf("%sUsage: ./philo number_of_philos ", BRED);
+		printf("time_to_die time_to_eat time_to_sleep ");
+		printf("[number_of_times_each_philo_must_eat]\n%s", RESET);
 		return (0);
 	}
 	simulation->num_phi = ft_atoi(argv[1]);

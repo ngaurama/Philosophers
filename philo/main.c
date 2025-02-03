@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 16:55:32 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 14:59:07 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 15:02:37 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ int	main(int argc, char **argv)
 	print_simulation_details(&simulation);
 	if (!init_philo(&simulation))
 		return (1);
-	start_threads(&simulation);
+	if (start_threads(&simulation))
+	{
+		cleanup_simulation(&simulation);
+		return (1);
+	}
 	print_summary(&simulation, 0);
 	cleanup_simulation(&simulation);
 	return (0);

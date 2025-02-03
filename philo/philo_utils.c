@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 15:40:53 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 15:02:12 by ngaurama         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:02:58 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,17 @@ long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	precise_sleep(long duration_ms)
+void	precise_sleep(long duration_ms, t_philo *philo)
 {
 	long	start_time;
 
 	start_time = get_time();
 	while (get_time() - start_time < duration_ms)
+	{
+		if (is_simulation_over(philo))
+			break ;
 		usleep(100);
+	}
 }
 
 void	log_action(t_philo *philo, const char *action, char *color)

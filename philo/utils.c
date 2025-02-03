@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 16:38:21 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 15:03:13 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 14:49:15 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	ft_atoi(const char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		result = result * 10 + (*str - '0');
-		if (result > 2147483647 && sign == 1)
-			return (2147483647);
-		else if (result > 2147483647 && sign == -1)
-			return (-2147483648);
+		if (result > 2147483647)
+			return (0);
 		str++;
 	}
-	return (result * sign);
+	if (*str == '.')
+		return (0);
+	return ((int)(result * sign));
 }

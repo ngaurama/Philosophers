@@ -6,7 +6,7 @@
 /*   By: ngaurama <ngaurama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 23:46:06 by ngaurama          #+#    #+#             */
-/*   Updated: 2025/02/01 14:58:25 by nachogooda       ###   ########.fr       */
+/*   Updated: 2025/02/03 11:51:33 by ngaurama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	print_simulation_details(t_simulation *simulation)
 	printf(CYN "Details of the simulation:\n" RESET);
 	printf(BYEL "- Number of philosophers and forks: %d\n",
 		simulation->num_phi);
-	printf(BYEL "- Time to die: %d ms\n- Time to eat:", simulation->time_die);
+	printf(BYEL "- Time to die: %d ms\n- Time to eat: ", simulation->time_die);
 	printf("%d ms\n- Time to sleep: %d ms\n", simulation->time_eat,
 		simulation->time_sleep);
 	if (simulation->num_must_eat > 0)
@@ -65,5 +65,5 @@ void	print_simulation_details(t_simulation *simulation)
 	}
 	printf(GRN "Starting simulation...\n" RESET);
 	printf("\n");
-	sleep(2);
+	usleep(2000000);
 }
